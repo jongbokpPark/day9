@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #wrapper {
+        width: 1000px;
+        height: 800px;
+        background: yellow;
+        margin: 0 auto;
+        position: relative;
+        background: url("../images/mario/mario_bg.jpg") no-repeat center top;
+        background-size: 1000px 750px;
+      }
+    </style>
+    <script>
+      // 0 빈공간, 1 벽돌, 2 물음표, 3 버섯, 4 루이지, 5 별, 6 포탈, 7 식물
+      // 이차원 구조의 맵을 이차원 배열로 표현
+      let map = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 3, 0, 0],
+        [0, 4, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 3, 0, 6, 7, 0],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      ];
+
+      let brick;
+      let wrapper;
+
+      function createBrick() {
+        //층수
+        for (let a = 0; a < map.length; a++) {
+          //호수
+          for (let i = 0; i < map[a].length; i++) {
+            // 가로 세로 50인 div에 벽동이미지를 입혀서, 한줄을 출력
+
+            // 0이 아닐떄만 물체생성
+            if (map[a][i] != 0) {
+              brick = document.createElement("div");
+              brick.style.width = 50 + "px";
+              brick.style.height = 50 + "px";
+
+              let filname = "";
+              switch (map[a][i]) {
+                case 1:
+                  filname = "brick1.png";
+                  break;
+                case 2:
+                  filname = "brick2.png";
+                  break;
+                case 3:
+                  filname = "enemy.png";
+                  break;
+                case 4:
+                  filname = "luigi.png";
+                  break;
+                case 5:
+                  filname = "star.png";
+                  break;
+                case 6:
+                  filname = "portal.png";
+                  break;
+                case 7:
+                  filname = "plant.png";
+                  break;
+              }
+
+              brick.style.backgroundImage =
+                "url(../images/mario/" + filname + ")";
+              brick.style.position = "absolute";
+              brick.style.left = i * 50 + "px";
+              brick.style.top = a * 50 + "px";
+              brick.style.backgroundSize = "50px 50px";
+
+              wrapper.appendChild(brick);
+            }
+          }
+        }
+      }
+      addEventListener("load", function () {
+        wrapper = document.getElementById("wrapper");
+
+        createBrick(); // 벽돌생성
+      });
+    </script>
+  </head>
+  <body>
+    <div id="wrapper"></div>
+  </body>
+</html>
