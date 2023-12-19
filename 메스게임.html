@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="../lib/common.js"></script>
+    <script src="../lib/Cell.js"></script>
+
+    <script>
+      let wrapper;
+      let cellWidth = 15; // 각 셀의 너비
+      let cellHeight = 15; // 각 셀의 높이
+      let row = 100; // 셀의 층수
+      let col = 100; // 셀의 호수
+      let cellArray = [];
+
+      function createCell() {
+        for (let i = 0; i < row; i++) {
+          let arr = [];
+          for (let a = 0; a < col; a++) {
+            // 방1
+            // let cell = new Cell(
+            //   wrapper,
+            //   a * cellWidth,
+            //   i * cellHeight,
+            //   cellWidth,
+            //   cellHeight,
+            //   "red"
+            // );
+
+            // arr.push(cell);
+
+            // 방2
+            arr[a] = new Cell(
+              wrapper,
+              a * cellWidth,
+              i * cellHeight,
+              cellWidth,
+              cellHeight,
+              "red"
+            );
+          }
+          cellArray.push(arr);
+        }
+      }
+
+      function gameLoop() {
+        for (let i = 0; i < cellArray.length; i++) {
+          for (let a = 0; a < cellArray[i].length; a++) {
+            cellArray[i][a].render();
+          }
+        }
+      }
+
+      addEventListener("load", function () {
+        wrapper = document.createElement("div");
+        wrapper.style.width = cellWidth * col + "px";
+        wrapper.style.height = cellHeight * row + "px";
+        wrapper.style.backgroundImage = "url(../images/christmas/tree_bg.jpg)";
+        wrapper.style.backgroundSize =
+          cellWidth * col + "px " + cellHeight * row + "px";
+        wrapper.style.margin = "0 auto";
+        wrapper.style.position = "relative";
+
+        document.body.appendChild(wrapper);
+
+        // Create cells
+        createCell();
+
+        setInterval("gameLoop()", 50);
+      });
+    </script>
+  </head>
+  <body></body>
+</html>

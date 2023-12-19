@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="../lib/common.js"></script>
+    <script src="../lib/ball.js"></script>
+    <script>
+      let wrapper;
+      let ballArray = [];
+      let flag = true;
+
+      function init() {
+        wrapper = document.getElementById("wrapper");
+        wrapper.style.width = 1000 + "px";
+        wrapper.style.height = 1000 + "px";
+        wrapper.style.background = "Navy";
+        wrapper.style.margin = "0 auto";
+        wrapper.style.position = "relative";
+
+        document.body.addEventListener("keydown", function () {
+          // alert(event.keyCode);
+          if (event.keyCode == 27) {
+            flag = !flag;
+          } else if (event.keyCode == 32) {
+            createBall();
+          }
+        });
+      }
+
+      function createBall() {
+        // getRandom(max)
+        // constructor(container, x, y, width, height, velX, velY, bg) {
+
+        // 위치
+        let x = getRandomByRange(0, 960);
+        let y = getRandomByRange(0, 960);
+
+        let width = getRandomByRange(40, 40);
+        let height = getRandomByRange(40, 40);
+
+        // 속도
+        let velX = getRandomByRange(1, 8);
+        let velY = getRandomByRange(1, 8);
+
+        // 컬러
+        let color =
+          "rgb(" +
+          getRandom(256) +
+          "," +
+          getRandom(256) +
+          "," +
+          getRandom(256) +
+          ")";
+
+        let ball = new Ball(wrapper, x, y, width, height, velX, velY, color);
+        ball.div.innerText = ballArray.length;
+
+        ballArray.push(ball);
+        //h1태그에 현재 생성된 공의 수를 출력하자
+        document.querySelector("h1").innerText =
+          "생성된 공의 수 " + ballArray.length;
+        document.querySelector("h1").style.textAlign = "center";
+      }
+
+      function gameLoop() {
+        if (flag) {
+          for (let i = 0; i < ballArray.length; i++) {
+            ballArray[i].render();
+          }
+        }
+      }
+
+      addEventListener("load", function () {
+        init();
+        createBall();
+        setInterval("gameLoop()", 1);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="wrapper"></div>
+    <h1></h1>
+  </body>
+</html>
